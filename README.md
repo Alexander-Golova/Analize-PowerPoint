@@ -1,2 +1,2 @@
-# Analize-PowerPoint
+# Analize PowerPoint
 PowerPoint VBA

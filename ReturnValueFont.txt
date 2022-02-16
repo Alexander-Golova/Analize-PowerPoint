@@ -1,0 +1,33 @@
+Option Explicit
+
+Sub PrintPresentationInfo()
+    
+    Dim textFile As Integer
+    textFile = FreeFile
+    Open "c:\temp\temp.txt" For Output As textFile
+    
+    Dim pres As Presentation
+    Set pres = ActivePresentation
+    
+    Print #textFile, "Presentation name: ", pres.Name
+    Print #textFile, "Slide Count: ", pres.Slides.Count
+    Print #textFile, "Slide size: ", Str(pres.SlideMaster.Width), Str(pres.SlideMaster.Height)
+    
+    Dim sld As Slide
+    For Each sld In pres.Slides
+        Print #textFile, "Slide #", sld.SlideIndex
+        
+        Dim sh As Shape
+        For Each sh In sld.Shapes
+            Print #textFile, "", "Shape ", sh.Name, sh.Left, sh.Top, sh.Width, sh.Height
+
+            If sh.HasTextFrame Then
+                Print #textFile, "", "", """" & sh.TextFrame.TextRange.Text & """"
+                Print #textFile, "", "", sh.TextFrame.TextRange.Font.Name, sh.TextFrame.TextRange.Font.Size
+            End If
+        Next
+    Next
+    
+    Close textFile
+
+End Sub
