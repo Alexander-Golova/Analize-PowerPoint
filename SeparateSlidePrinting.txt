@@ -10,8 +10,10 @@ Sub PrintPresentationInfo()
 
     Dim pathFile As String
     Dim pathDir As String
-    pathDir = "c:\temp\" & pres.Name & "_"
+    pathDir = "c:\temp\" & pres.Name
     
+    pathDir = Left(pathDir, Len(pathDir) - 5)
+    pathDir = pathDir & "_"
     Dim sld As Slide
     For Each sld In pres.Slides
         pathFile = pathDir & sld.SlideIndex & ".txt"
