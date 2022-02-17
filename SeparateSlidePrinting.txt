@@ -1,0 +1,31 @@
+Option Explicit
+
+Sub PrintPresentationInfo()
+    
+    Dim textFile As Integer
+    textFile = FreeFile
+    
+    Dim pres As Presentation
+    Set pres = ActivePresentation
+
+    Dim pathFile As String
+    Dim pathDir As String
+    pathDir = "c:\temp\" & pres.Name & "_"
+    
+    Dim sld As Slide
+    For Each sld In pres.Slides
+        pathFile = pathDir & sld.SlideIndex & ".txt"
+        Open pathFile For Output As textFile
+        Print #textFile, "Slide #", sld.SlideIndex
+        
+        Dim sh As Shape
+        For Each sh In sld.Shapes
+            Print #textFile, "", "Shape ", sh.Name, sh.Left, sh.Top, sh.Width, sh.Height
+            If sh.HasTextFrame Then
+                Print #textFile, "", "", """" & sh.TextFrame.TextRange.Text & """"
+            End If
+        Next
+        Close textFile
+    Next
+
+End Sub
