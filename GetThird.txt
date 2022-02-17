@@ -1,0 +1,26 @@
+Option Explicit
+
+Sub PrintObjectSizes()
+
+    Dim textFile As Integer
+    textFile = FreeFile
+    Open "c:\temp\temp.txt" For Output As textFile
+    
+    Dim pres As Presentation
+    Set pres = ActivePresentation
+    
+    Print #textFile, "Slide size: ", pres.SlideMaster.Width, pres.SlideMaster.Height
+    Dim thirdWidth, twoThirdsWide As Integer
+    Dim thirdHeight, twoThirdsHeight As Integer
+    
+    thirdWidth = pres.SlideMaster.Width / 3
+    twoThirdsWide = 2 * pres.SlideMaster.Width / 3
+    Print #textFile, "", thirdWidth, twoThirdsWide
+    
+    thirdHeight = pres.SlideMaster.Height / 3
+    twoThirdsHeight = 2 * pres.SlideMaster.Height / 3
+    Print #textFile, "", thirdHeight, twoThirdsHeight
+    
+    Close textFile
+    
+End Sub
