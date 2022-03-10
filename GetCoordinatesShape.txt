@@ -1,0 +1,32 @@
+Option Explicit
+
+Sub PrintPresentationInfo()
+    
+    Dim textFile As Integer
+    textFile = FreeFile
+    
+    Dim pres As Presentation
+    Set pres = ActivePresentation
+
+    Dim pathFile As String
+    Dim pathDir As String
+    pathDir = "c:\temp\slide"
+    
+    Dim sld As Slide
+    For Each sld In pres.Slides
+        pathDir = "c:\temp\slide"
+        If sld.SlideIndex < 10 Then
+            pathDir = pathDir & "0"
+        End If
+        pathFile = pathDir & sld.SlideIndex & ".txt"
+        Open pathFile For Output As textFile
+        Print #textFile, "Shape", "Left", "Top", "Width", "Height"
+        
+        Dim sh As Shape
+        For Each sh In sld.Shapes
+            Print #textFile, sh.Name, sh.Left, sh.Top, sh.Width, sh.Height
+        Next
+        Close textFile
+    Next
+
+End Sub
