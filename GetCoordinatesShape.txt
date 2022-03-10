@@ -18,13 +18,15 @@ Sub PrintPresentationInfo()
         If sld.SlideIndex < 10 Then
             pathDir = pathDir & "0"
         End If
-        pathFile = pathDir & sld.SlideIndex & ".txt"
+        pathFile = pathDir & sld.SlideIndex & ".csv"
         Open pathFile For Output As textFile
-        Print #textFile, "Shape", "Left", "Top", "Width", "Height"
+        Print #textFile, "Shape," & "Left," & "Top," & "Width," & "Height"
         
         Dim sh As Shape
+        Dim nameSh As String
         For Each sh In sld.Shapes
-            Print #textFile, sh.Name, sh.Left, sh.Top, sh.Width, sh.Height
+            nameSh = sh.name
+            Print #textFile, nameSh; "," & Round(sh.Left); "," & Round(sh.Top); "," & Round(sh.Width); "," & Round(sh.Height)
         Next
         Close textFile
     Next
