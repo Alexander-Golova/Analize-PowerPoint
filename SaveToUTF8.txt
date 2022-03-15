@@ -1,0 +1,23 @@
+Option Explicit
+
+Sub ANSI_to_UFT8()
+    Dim FileANSI$, Str$
+    Dim Nomer As Byte
+    Dim TxtUnicod As Object
+    
+    FileANSI = "c:\temp\slide01.csv"
+    Nomer = FreeFile
+    Open FileANSI For Input As Nomer
+    Str = Input(LOF(Nomer), Nomer)
+    Close Nomer
+    
+    Set TxtUnicod = CreateObject("ADODB.Stream")
+    With TxtUnicod
+        .Type = 2
+        .Charset = "UTF-8"
+        .Open
+        .WriteText Str
+        .Savetofile "c:\temp\slide01.csv", 2
+        .Close
+    End With
+End Sub
